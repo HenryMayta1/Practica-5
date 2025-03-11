@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pantalla de Inicio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-image: url('imagen1.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      font-family: 'Luckiest Guy', cursive;
+      position: relative;
+    }
+    .boton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      position: absolute;
+      width: 300px;
+      padding: 20px;
+      font-size: 1.5em;
+      color: #fff;
+      background-color: #E8A615;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      left: 80%;
+      transform: translateX(-50%);
+      font-family: 'Luckiest Guy', cursive;
+      opacity: 0.6;
+      text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+      transition: all 0.3s ease;
+    }
+    .boton:hover {
+      background-color: #FFC107;
+      opacity: 1;
+    }
+    .icono {
+      width: 30px; /* Ajusta el tamaño del icono */
+      height: 30px;
+    }
+    #jugar {
+      top: 60%;
+    }
+    #opciones {
+      top: calc(65% + 70px);
+    }
+    #salir {
+      top: calc(70% + 140px);
+    }
+  </style>
+</head>
+<body>
+  <button id="jugar" class="boton" onclick="jugar()">
+    <img src="musica.png" alt="Jugar" class="icono"> JUGAR
+  </button>
+  <button id="opciones" class="boton" onclick="opciones()">
+    <img src="engranajes.png" alt="Opciones" class="icono"> OPCIONES
+  </button>
+  <button id="salir" class="boton" onclick="salir()">
+    <img src="cerrar-sesion.png" alt="Salir" class="icono"> SALIR
+  </button>
+
+  <script>
+    function jugar() {
+      window.location.href = "index1.html";
+    }
+
+    function opciones() {
+      alert("Abriendo opciones...");
+    }
+
+    function salir() {
+      alert("Saliendo del juego...");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guitarra en Three.js</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-image: url('imagen2.jpg'); 
+      background-size: cover; 
+      background-position: center; 
+      color: #fff;
+      font-family: 'Luckiest Guy', cursive;
+      position: relative;
+      overflow: hidden; 
+    }
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1; 
+    }
+    .controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.8); 
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 2; 
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <label for="translateX">Traslación X:</label>
+    <input type="range" id="translateX" min="-5" max="5" step="0.1" value="0"><br>
+
+    <label for="rotateY">Rotación Y:</label>
+    <input type="range" id="rotateY" min="0" max="360" step="1" value="0"><br>
+
+    <label for="scale">Escalado:</label>
+    <input type="range" id="scale" min="0.5" max="2" step="0.1" value="1">
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
+  <script>
+    // Configuración básica de Three.js
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Luz
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(5, 5, 5).normalize();
+    scene.add(light);
+
+    // Grupo para unir la guitarra
+    const guitarra = new THREE.Group();
+
+    // Cuerpo de la guitarra (color blanco y negro)
+    const bodyGeometry = new THREE.CylinderGeometry(1.5, 1.8, 0.5, 32);
+    const bodyMaterial = new THREE.MeshPhongMaterial({ color: 0xFFFFFF }); // Blanco
+    const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+    body.rotation.z = Math.PI / 2;
+    guitarra.add(body);
+
+    // Mástil (color negro)
+    const neckGeometry = new THREE.BoxGeometry(0.3, 3.5, 0.3);
+    const neckMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 }); // Negro
+    const neck = new THREE.Mesh(neckGeometry, neckMaterial);
+    neck.position.set(0, 2, 0);
+    guitarra.add(neck);
+
+    // Cabeza de la guitarra (color negro)
+    const headGeometry = new THREE.BoxGeometry(0.5, 1, 0.3);
+    const headMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 }); // Negro
+    const head = new THREE.Mesh(headGeometry, headMaterial);
+    head.position.set(0, 3.5, 0); // Ajustamos la posición para mejorar la vista
+    guitarra.add(head);
+
+    // Posicionar guitarra en la escena
+    guitarra.position.set(0, -1, 0); // Ajustamos la posición general para mejorar la vista
+    scene.add(guitarra);
+
+    // Posición de la cámara
+    camera.position.z = 8;
+    camera.position.y = 2;
+
+    // Animación
+    function animate() {
+      requestAnimationFrame(animate);
+      guitarra.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Controles de transformación
+    document.getElementById('translateX').addEventListener('input', function() {
+      guitarra.position.x = parseFloat(this.value);
+    });
+
+    document.getElementById('rotateY').addEventListener('input', function() {
+      guitarra.rotation.y = THREE.MathUtils.degToRad(parseFloat(this.value));
+    });
+
+    document.getElementById('scale').addEventListener('input', function() {
+      const scaleValue = parseFloat(this.value);
+      guitarra.scale.set(scaleValue, scaleValue, scaleValue);
+    });
+  </script>
+</body>
+</html>
